@@ -8,7 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Register.css";
 
-toast.configure(); // toast is alert message ..
+toast.configure();
 const initialValues = {
   firstName: "",
   lastName: "",
@@ -19,6 +19,7 @@ const initialValues = {
   password: "",
   confirmPassword: "",
 };
+
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required("Please provide First Name"),
   lastName: Yup.string().required("Please provide Last Name"),
@@ -33,14 +34,13 @@ const validationSchema = Yup.object().shape({
     "Password should match"
   ),
 });
+
 const submitForm = (values, action) => {
   service
     .register(values)
     .then((response) => {
-      // if there is a succes then work
       if (response.status === 200 && response.data.success) {
         toast.success(response.data.message, {
-          // to show the message with key value on top position center
           position: toast.POSITION.TOP_CENTER,
         });
         action.resetForm();
@@ -51,7 +51,6 @@ const submitForm = (values, action) => {
       }
     })
     .catch((e) => {
-      // catching error
       console.log("Error on submitting form ", e);
     });
   action.setSubmitting(false);
@@ -175,4 +174,5 @@ const Register = () => {
     </div>
   );
 };
+
 export default Register;

@@ -11,12 +11,16 @@ import Typography from "@material-ui/core/Typography";
 
 import ExitToApp from "@material-ui/icons/ExitToApp";
 import { useStateValue } from "../StateProvider";
-import AdminMenu from "../menus/AdminMenu.js";
+
+import AdminMenu from "../menus/AdminMenu";
 import UserMenu from "../menus/UserMenu";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
   },
   button: {
     marginLeft: "40px",
@@ -28,44 +32,12 @@ const useStyles = makeStyles((theme) => ({
       color: "yellow",
     },
   },
-  logo: {
-    height: "50px",
-    objectFit: "contain",
-  },
-  headerLink: {
-    color: "white",
-    textDecoration: "none",
-    display: "flex",
-    alignItems: "right",
-  },
-  headerOption: {
-    display: "flex",
-    flexDirection: "column",
-    marginLeft: "10px",
-    marginRight: "10px",
-  },
-  headerLineOne: {
-    fontSize: "13px",
-    fontWeight: "bold",
-    "&:hover": {
-      backgroundColor: "black",
-      color: "yellow",
-    },
-  },
-  headerLineTwo: {
-    fontSize: "15px",
-    fontWeight: "bold",
-    "&:hover": {
-      backgroundColor: "black",
-      color: "yellow",
-    },
-  },
   spacer: {
-    paddingLeft: "25vw",
+    paddingLeft: "200px",
   },
 }));
 
-const Header = () => {
+function Header() {
   const classes = useStyles();
   const showAboutUs = () => {
     const elmnt = document.getElementById("about");
@@ -91,16 +63,17 @@ const Header = () => {
       elmnt.scrollIntoView({ behavior: "smooth" });
     }
   };
-
-  const [{ userInfo }, dispatch] = useStateValue();
+  const [{ userInfo }] = useStateValue();
   return (
     <div className={classes.root}>
-      <AppBar position="sticky">
+      <AppBar position="static">
         <Toolbar variant="dense">
           <Link to="/">
-            <img className={classes.logo} src={logo} alt="logo" />
+            <img className="header__logo" src={logo} alt="" />
           </Link>
-          <Typography variant="h6">MTD Bank</Typography>
+          <Typography variant="h6" color="inherit">
+            MTD Bank
+          </Typography>
           <Button className={classes.button} onClick={showAboutUs}>
             About Us
           </Button>
@@ -114,28 +87,57 @@ const Header = () => {
             Contact Us
           </Button>
           <div className={classes.spacer}></div>
-
           {!userInfo && (
             <div class="row">
-              <Link to="/login" className={classes.headerLink}>
-                <div className={classes.headerOption}>
-                  <span className={classes.headerLineOne}>Hello</span>
-                  <span className={classes.headerLineTwo}>Sing In</span>
+              <Link to="/login" className="header__link">
+                <div className="header__option">
+                  <span className="header__lineOne">Hello</span>
+                  <span className="header__lineTwo">Sign In</span>
                 </div>
               </Link>
-              <Link to="/register" className={classes.headerLink}>
-                <div className={classes.headerOption}>
-                  <span className={classes.headerLineOne}>New User</span>
-                  <span className={classes.headerLineTwo}>Register</span>
+              <Link to="/register" className="header__link">
+                <div className="header__option">
+                  <span className="header__lineOne">New User</span>
+                  <span className="header__lineTwo">Register</span>
                 </div>
               </Link>
             </div>
           )}
-          {userInfo && <div>Logout comes here </div>}
+          {userInfo && userInfo.user && userInfo.user.isAdmin && <AdminMenu />}
+          {userInfo && userInfo.user && !userInfo.user.isAdmin && <UserMenu />}
+          {userInfo && (
+            <div class="row">
+              {/*Below Div is for Greetings */}
+              <div class="row mx-auto">
+                <div className="header__greeting">
+                  <div className="header__option">
+                    <div className="header__lineOne">Welcome</div>
+                    <div className="header__lineTwo">
+                      {userInfo.user.firstName} {userInfo.user.lastName}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/*Greetings div got completed */}
+
+              {/* Div for Logout Starts here */}
+              <div>
+                <Link to="/logout" className="header__link mx-auto">
+                  <div className="header__option">
+                    <span className="header__lineOne">
+                      <ExitToApp />
+                    </span>
+                    <span className="header__lineTwo">Logout</span>
+                  </div>
+                </Link>
+              </div>
+              {/* Div for Logout Completed here */}
+            </div>
+          )}
         </Toolbar>
       </AppBar>
     </div>
   );
-};
+}
 
 export default Header;

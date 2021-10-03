@@ -8,10 +8,8 @@ import { useStateValue } from "../StateProvider";
 import { useHistory } from "react-router";
 import "react-toastify/dist/ReactToastify.css";
 import * as Yup from "yup";
-//import "./Login.css";
 
 toast.configure();
-
 const LoginSchema = Yup.object().shape({
   password: Yup.string().required("Required"),
   username: Yup.string().required("Required"),

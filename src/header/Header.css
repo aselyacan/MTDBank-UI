@@ -13,13 +13,6 @@
   object-fit: contain;
 }
 
-.head__menu {
-  padding-left: 80px;
-  padding-right: 80px;
-  color: rgb(1, 39, 1);
-  border: 0px;
-  font-weight: bolder;
-}
 /* Latest Changes for hover */
 .header__link:hover {
   text-decoration: none;
@@ -41,7 +34,14 @@
 }
 
 .header__link {
-  color: rgb(177, 27, 27);
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: right;
+}
+
+.header__greeting {
+  color: white;
   text-decoration: none;
   display: flex;
   align-items: right;

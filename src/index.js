@@ -1,16 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App"; // App with {} defalt export
+import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import "bootstrap/dist/css/bootstrap.min.css";
-import reducer, { initialState } from "./reducer"; // {} export withouth default
 import { StateProvider } from "./StateProvider";
+import reducer, { initialState } from "./reducer";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 ReactDOM.render(
   <React.Fragment>
     <StateProvider initialState={initialState} reducer={reducer}>
-      <App /> {/* app is childeren*/}
+      <App />
     </StateProvider>
   </React.Fragment>,
   document.getElementById("root")
