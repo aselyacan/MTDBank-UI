@@ -5,10 +5,13 @@ agent any
   stages{
   
     stage("run frontend with reactJS"){
+      
+      steps{
          echo 'executing yarn'
-         nodejs('Node-17.7.2')
-         sh 'yarn install' 
-    
+         nodejs('Node-17.7.2'){
+          sh 'yarn install' 
+         }
+      }
      
     }
   
@@ -16,8 +19,10 @@ agent any
   
   
    stage("run backend"){
-    
+     steps{
     echo 'executing gradle...'
+       
+     }
     }
 
 
